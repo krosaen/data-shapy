@@ -29,6 +29,8 @@ def summarize_data_shape(example):
         return example
 
     if isinstance(example, list) or isinstance(example, tuple):
+        if len(example) == 2 and is_ground(example[0]):
+            return [example[0], summarize_data_shape(example[1])]
         if len(example) < 10 and all(map(is_ground, example)):
             return example
         elif all([isinstance(el, dict) for el in example[:20]]):
